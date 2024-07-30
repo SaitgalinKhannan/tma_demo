@@ -70,6 +70,7 @@ function ChatPage() {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [showCommands, setShowCommands] = useState(false);
+  const isMouseDownRef = useRef(false);
   const commands: Command[] = [
     {
       command: "hi",
@@ -236,16 +237,25 @@ function ChatPage() {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleMouseDown = (event: MouseEvent) => {
       if (textareaRef.current && !textareaRef.current.contains(event.target as Node)) {
-        textareaRef.current.blur();
+        isMouseDownRef.current = true;
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    const handleMouseUp = (event: MouseEvent) => {
+      if (isMouseDownRef.current && textareaRef.current && !textareaRef.current.contains(event.target as Node)) {
+        textareaRef.current.blur();
+      }
+      isMouseDownRef.current = false;
+    };
+
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
   }, []);
 
