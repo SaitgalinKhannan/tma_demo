@@ -73,7 +73,7 @@ function ChatPage() {
   const commands: Command[] = [
     {
       command: "hi",
-      description: "",
+      description: "Приветствую",
     },
   ];
   const buttonRef = useRef<HTMLButtonElement>(null);
