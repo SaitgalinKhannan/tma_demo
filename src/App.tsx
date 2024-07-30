@@ -224,6 +224,9 @@ function ChatPage() {
   };
 
   const handleTouchStart = () => {
+    if (textareaRef.current) {
+      textareaRef.current.blur();
+    }
     if (
       messageContainerRef.current &&
       messageContainerRef.current.scrollTop !== 0
