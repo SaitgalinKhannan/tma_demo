@@ -225,7 +225,7 @@ function ChatPage() {
 
   const handleTouchStart = () => {
     if (textareaRef.current) {
-      textareaRef.current.blur();
+      textareaRef.current.blur(); //
     }
     if (
       messageContainerRef.current &&
